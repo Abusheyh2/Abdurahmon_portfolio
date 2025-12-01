@@ -80,20 +80,9 @@
             font-size: 0.8rem;
         }
 
-        .admin-btn.save {
-            background: #22c55e;
-            color: white;
-        }
-
-        .admin-btn.add-post {
-            background: var(--accent);
-            color: #0f172a;
-        }
-
-        .admin-btn.cancel {
-            background: #ef4444;
-            color: white;
-        }
+        .admin-btn.save { background: #22c55e; color: white; }
+        .admin-btn.add-post { background: var(--accent); color: #0f172a; }
+        .admin-btn.cancel { background: #ef4444; color: white; }
 
         /* --- ANIMATED BACKGROUND --- */
         .bg-glow {
@@ -131,13 +120,8 @@
         }
 
         @keyframes floatOrb {
-            0% {
-                transform: translate(0, 0);
-            }
-
-            100% {
-                transform: translate(30px, 50px);
-            }
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(30px, 50px); }
         }
 
         /* --- NAVIGATION --- */
@@ -163,9 +147,7 @@
             color: var(--text-main);
         }
 
-        .logo span {
-            color: var(--primary);
-        }
+        .logo span { color: var(--primary); }
 
         .nav-menu {
             list-style: none;
@@ -183,13 +165,9 @@
         }
 
         .nav-link:hover,
-        .nav-link.active {
-            color: var(--primary);
-        }
+        .nav-link.active { color: var(--primary); }
 
-        .nav-item {
-            position: relative;
-        }
+        .nav-item { position: relative; }
 
         .dropdown {
             position: absolute;
@@ -238,20 +216,11 @@
             animation: fadeIn 0.5s ease;
         }
 
-        .page-section.active-page {
-            display: block;
-        }
+        .page-section.active-page { display: block; }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* --- HERO --- */
@@ -311,10 +280,10 @@
             padding: 25px;
             border-radius: 16px;
             position: relative;
-            margin-bottom: 20px;
+            margin-bottom: 20px; 
             transition: 0.3s;
         }
-
+        
         .blog-img {
             width: 100%;
             height: 200px;
@@ -322,9 +291,9 @@
             border-radius: 10px;
             margin-bottom: 15px;
             cursor: pointer;
-            border: 2px dashed rgba(255, 255, 255, 0.1);
+            border: 2px dashed rgba(255,255,255,0.1);
         }
-
+        
         .blog-date {
             font-size: 0.8rem;
             color: var(--primary);
@@ -344,17 +313,15 @@
             border-radius: 50%;
             border: none;
             cursor: pointer;
-            display: none;
-            /* Hidden unless in admin mode */
+            display: none; /* Hidden unless in admin mode */
             align-items: center;
             justify-content: center;
             font-size: 0.8rem;
             z-index: 10;
         }
-
+        
         body.admin-active .delete-btn {
-            display: flex;
-            /* Show when admin mode is active */
+            display: flex; /* Show when admin mode is active */
         }
 
         /* --- FOOTER --- */
@@ -373,9 +340,7 @@
             transition: 0.3s;
         }
 
-        .admin-trigger:hover {
-            color: var(--text-muted);
-        }
+        .admin-trigger:hover { color: var(--text-muted); }
 
         /* --- MOBILE MENU --- */
         .menu-toggle {
@@ -386,14 +351,8 @@
         }
 
         @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
-            }
-
-            .hero-text h1 {
-                font-size: 2.5rem;
-            }
-
+            .menu-toggle { display: block; }
+            .hero-text h1 { font-size: 2.5rem; }
             .nav-menu {
                 display: none;
                 flex-direction: column;
@@ -407,11 +366,7 @@
                 text-align: center;
                 gap: 20px;
             }
-
-            .nav-menu.active {
-                display: flex;
-            }
-
+            .nav-menu.active { display: flex; }
             .dropdown {
                 position: static;
                 opacity: 1;
@@ -423,10 +378,7 @@
                 padding: 10px 0 0 0;
                 display: none;
             }
-
-            .nav-item:hover .dropdown {
-                display: block;
-            }
+            .nav-item:hover .dropdown { display: block; }
         }
     </style>
 </head>
@@ -476,10 +428,11 @@
     <section id="home" class="page-section active-page">
         <div class="hero-container">
             <div class="profile-frame" onclick="triggerImageUpload(this)">
-                <img src="https://via.placeholder.com/400x400/38bdf8/0f172a?text=Upload+Photo" class="profile-img">
+                <!-- Default Placeholder Image -->
+                <img src="./image.png" class="profile-img">
             </div>
             <div class="hero-text">
-                <div class="editable" contenteditable="false">IB STUDENT &middot; CLASS OF 2027</div>
+                <div class="editable" contenteditable="false">IB STUDENT &middot; CLASS OF 2025</div>
                 <h1 class="editable" contenteditable="false">Shonazarov<br>Abdurahmon</h1>
                 <p class="editable" contenteditable="false"
                     style="color: var(--text-muted); font-size: 1.1rem; max-width: 500px; margin-bottom: 30px;">
@@ -489,8 +442,7 @@
             </div>
         </div>
         <div class="section-container">
-            <h2 class="editable" contenteditable="false"
-                style="border-left: 5px solid var(--primary); padding-left: 15px;">My Passions</h2>
+            <h2 class="editable" contenteditable="false" style="border-left: 5px solid var(--primary); padding-left: 15px;">My Passions</h2>
             <div class="grid-3">
                 <div class="glass-card">
                     <h3 class="editable" contenteditable="false">Chess</h3>
@@ -542,16 +494,15 @@
                 <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 20px;">
                     *Admin Note: Click "+ NEW POST" to add entries here.*
                 </p>
-
+                
                 <!-- NEW POSTS WILL BE ADDED HERE -->
                 <div id="blog-container" class="grid-3">
-
+                    
                     <!-- Example Post -->
                     <div class="glass-card">
                         <button class="delete-btn" onclick="deletePost(this)"><i class="fas fa-trash"></i></button>
                         <div onclick="triggerImageUpload(this)">
-                            <img src="https://via.placeholder.com/600x400/1e293b/38bdf8?text=Click+to+Add+Image"
-                                class="blog-img">
+                            <img src="https://via.placeholder.com/600x400/1e293b/38bdf8?text=Click+to+Add+Image" class="blog-img">
                         </div>
                         <span class="blog-date editable" contenteditable="false">October 2025</span>
                         <h3 class="editable" contenteditable="false">Welcome to my Portfolio</h3>
@@ -573,16 +524,12 @@
     <!-- LOGIC SCRIPT -->
     <script>
         // ============================================
-        // !!! IMPORTANT: ENTER GITHUB INFO HERE !!!
+        // !!! CONFIGURED FOR YOUR REPO !!!
         // ============================================
-        const GITHUB_USERNAME = "Abusheyh2";
+        const GITHUB_USERNAME = "Abusheyh2"; 
         const REPO_NAME = "Abdurahmon_portfolio";
-
-            // CHECK: Is your branch named 'main' or 'master'?
-            // (Look at your GitHub page, top left selector. It usually says 'main')
         const BRANCH_NAME = "main";
-
-        const FILE_PATH = "index.html";
+        const FILE_PATH = "index.html"; 
 
         // --- NAVIGATION ---
         function toggleMenu() {
@@ -625,7 +572,7 @@
 
             // 1. Force switch to Grade 9 page so user sees the result
             switchPage('grade9');
-
+            
             // 2. Create the HTML for a new post
             const newPostHTML = `
                 <div class="glass-card" style="animation: fadeIn 0.5s ease;">
@@ -650,8 +597,8 @@
         }
 
         function deletePost(btn) {
-            if (!isAdmin) return;
-            if (confirm("Are you sure you want to delete this post?")) {
+            if(!isAdmin) return;
+            if(confirm("Are you sure you want to delete this post?")) {
                 btn.parentElement.remove();
             }
         }
@@ -667,7 +614,7 @@
         document.getElementById('img-upload').addEventListener('change', function (e) {
             if (e.target.files && e.target.files[0]) {
                 const file = e.target.files[0];
-                if (file.size > 1000000) {
+                if(file.size > 1000000) { 
                     alert("Warning: This image is large (>1MB). It might prevent saving to GitHub. Use a smaller image.");
                 }
                 const reader = new FileReader();
@@ -682,11 +629,6 @@
 
         // --- SAVE TO GITHUB ---
         async function saveSite() {
-            if (GITHUB_USERNAME === "YOUR_GITHUB_USERNAME_HERE") {
-                alert("ERROR: Edit the code to set GITHUB_USERNAME first.");
-                return;
-            }
-
             const token = prompt("Paste GitHub Token to Save:");
             if (!token) return;
 
@@ -712,8 +654,8 @@
                 const getRes = await fetch(apiUrl, {
                     headers: { 'Authorization': `token ${token}` }
                 });
-
-                if (!getRes.ok) throw new Error("Repo not found");
+                
+                if(!getRes.ok) throw new Error("Repo not found");
                 const sha = (await getRes.json()).sha;
 
                 // UPLOAD
@@ -745,5 +687,4 @@
         }
     </script>
 </body>
-
 </html>

@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang='en'><head>
+<html lang="en">
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shonazarov Abdurahmon | IB Portfolio</title>
     <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;800&amp;family=Poppins:wght@300;400;600&amp;display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;800&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
@@ -320,6 +324,29 @@
             display: flex; /* Show when admin mode is active */
         }
 
+        /* --- LOADING OVERLAY --- */
+        #loading-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 20000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        .spinner {
+            border: 4px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary);
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
         /* --- FOOTER --- */
         footer {
             text-align: center;
@@ -379,11 +406,17 @@
     </style>
 </head>
 
-<body class="">
+<body>
 
     <div class="bg-glow">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <div id="loading-text">Uploading...</div>
     </div>
 
     <!-- Navigation -->
@@ -393,7 +426,7 @@
             <i class="fas fa-bars"></i>
         </div>
         <ul class="nav-menu" id="navMenu">
-            <li class="nav-item"><a class="nav-link" onclick="switchPage('home'); toggleMenu()">Home</a></li>
+            <li class="nav-item"><a class="nav-link active" onclick="switchPage('home'); toggleMenu()">Home</a></li>
             <li class="nav-item">
                 <div class="nav-link">Grade 8 <i class="fas fa-chevron-down"></i></div>
                 <div class="dropdown">
@@ -403,17 +436,17 @@
             <li class="nav-item">
                 <div class="nav-link">Grade 9 <i class="fas fa-chevron-down"></i></div>
                 <div class="dropdown">
-                    <a onclick="switchPage('grade9'); toggleMenu()">Subjects &amp; Blog</a>
+                    <a onclick="switchPage('grade9'); toggleMenu()">Subjects & Blog</a>
                 </div>
             </li>
         </ul>
     </nav>
 
     <!-- ADMIN PANEL -->
-    <div id="admin-bar" style="display: none;">
+    <div id="admin-bar">
         <span style="color:white; font-weight:600;">ADMIN</span>
         <button class="admin-btn add-post" onclick="createNewPost()">+ NEW POST</button>
-        <button class="admin-btn save" onclick="saveSite()">SAVING...</button>
+        <button class="admin-btn save" onclick="saveSite()">SAVE TO GITHUB</button>
         <button class="admin-btn cancel" onclick="location.reload()">CANCEL</button>
     </div>
 
@@ -421,16 +454,17 @@
     <input type="file" id="img-upload" style="display: none;" accept="image/*">
 
     <!-- ======================= HOME PAGE ======================= -->
-    <section id="home" class="page-section">
+    <section id="home" class="page-section active-page">
         <div class="hero-container">
             <div class="profile-frame" onclick="triggerImageUpload(this)">
                 <!-- Default Placeholder Image -->
-                <img src="./image.png" class="profile-img">
+                <img src="https://via.placeholder.com/400x400/38bdf8/0f172a?text=Upload+Photo" class="profile-img">
             </div>
             <div class="hero-text">
-                <div class="editable" contenteditable="false">IB STUDENT · CLASS OF 2025</div>
+                <div class="editable" contenteditable="false">IB STUDENT &middot; CLASS OF 2027</div>
                 <h1 class="editable" contenteditable="false">Shonazarov<br>Abdurahmon</h1>
-                <p class="editable" contenteditable="false" style="color: var(--text-muted); font-size: 1.1rem; max-width: 500px; margin-bottom: 30px;">
+                <p class="editable" contenteditable="false"
+                    style="color: var(--text-muted); font-size: 1.1rem; max-width: 500px; margin-bottom: 30px;">
                     A 9th-grade strategist with a passion for Chess, the agility of Volleyball, and the inquiring mind
                     of an IB learner.
                 </p>
@@ -469,9 +503,9 @@
     </section>
 
     <!-- ======================= GRADE 9 PAGE (BLOG AREA) ======================= -->
-    <section id="grade9" class="page-section active-page">
+    <section id="grade9" class="page-section">
         <div class="section-container">
-            <h1 class="editable" contenteditable="false">Grade 9 Portfolio &amp; Blog</h1>
+            <h1 class="editable" contenteditable="false">Grade 9 Portfolio & Blog</h1>
 
             <!-- ACADEMIC LIST -->
             <div style="margin-top: 40px;">
@@ -479,35 +513,32 @@
                 <div class="glass-card" style="margin-top: 20px;">
                     <p class="editable" contenteditable="false"><strong>Mathematics:</strong> Exploring Quadratics.</p>
                     <hr style="border-color: var(--glass-border); margin: 10px 0;">
-                    <p class="editable" contenteditable="false"><br></p>
+                    <p class="editable" contenteditable="false"><strong>Science:</strong> Biology and Physics.</p>
                 </div>
             </div>
 
             <!-- BLOG / PROJECTS CONTAINER -->
             <div style="margin-top: 40px;" id="blog-section-title">
-                <h2 class="editable" contenteditable="false" style="color:var(--primary);">Projects &amp; Blog</h2>
+                <h2 class="editable" contenteditable="false" style="color:var(--primary);">Projects & Blog</h2>
                 <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 20px;">
                     *Admin Note: Click "+ NEW POST" to add entries here.*
                 </p>
                 
                 <!-- NEW POSTS WILL BE ADDED HERE -->
                 <div id="blog-container" class="grid-3">
-                <div class="glass-card" style="animation: fadeIn 0.5s ease;">
-                    <button class="delete-btn" onclick="deletePost(this)"><i class="fas fa-trash"></i></button>
-                    <div onclick="triggerImageUpload(this)">
-                        <img src="https://via.placeholder.com/600x400/1e293b/38bdf8?text=Click+to+Add+Image" class="blog-img">
-                    </div>
-                    <span class="blog-date editable" contenteditable="false">Today's Date</span>
-                    <h3 class="editable" contenteditable="false">yo sup my nigga</h3>
-                    <p class="editable" contenteditable="false" style="color: var(--text-muted); margin-top:10px;">
-                        today the classes was awful i hated it</p>
-                </div>
-            
-                
-            
                     
                     <!-- Example Post -->
-                    
+                    <div class="glass-card">
+                        <button class="delete-btn" onclick="deletePost(this)"><i class="fas fa-trash"></i></button>
+                        <div onclick="triggerImageUpload(this)">
+                            <img src="https://via.placeholder.com/600x400/1e293b/38bdf8?text=Click+to+Add+Image" class="blog-img">
+                        </div>
+                        <span class="blog-date editable" contenteditable="false">October 2025</span>
+                        <h3 class="editable" contenteditable="false">Welcome to my Portfolio</h3>
+                        <p class="editable" contenteditable="false" style="color: var(--text-muted); margin-top:10px;">
+                            This is my first entry. I will be documenting my IB journey here.
+                        </p>
+                    </div>
 
                 </div>
             </div>
@@ -515,19 +546,22 @@
     </section>
 
     <footer>
-        <p>© 2025 Shonazarov Abdurahmon. IB Portfolio.</p>
+        <p>&copy; 2025 Shonazarov Abdurahmon. IB Portfolio.</p>
         <i class="fas fa-lock admin-trigger" onclick="adminLogin()"></i>
     </footer>
 
     <!-- LOGIC SCRIPT -->
     <script>
         // ============================================
-        // !!! CONFIGURED FOR YOUR REPO !!!
+        // !!! CONFIGURATION !!!
         // ============================================
         const GITHUB_USERNAME = "Abusheyh2"; 
         const REPO_NAME = "Abdurahmon_portfolio";
         const BRANCH_NAME = "main";
         const FILE_PATH = "index.html"; 
+
+        // GLOBAL SESSION TOKEN
+        let sessionToken = "";
 
         // --- NAVIGATION ---
         function toggleMenu() {
@@ -548,11 +582,18 @@
         function adminLogin() {
             let pass = prompt("Enter Admin Password:");
             if (pass === "admin") {
+                // ASK FOR TOKEN ONCE
+                sessionToken = prompt("Please enter your GitHub Token for this session:");
+                if(!sessionToken) {
+                    alert("Token is required to edit!");
+                    return;
+                }
+                
                 isAdmin = true;
                 document.getElementById('admin-bar').style.display = 'flex';
-                document.body.classList.add('admin-active'); // Show delete buttons
+                document.body.classList.add('admin-active');
                 toggleEditMode(true);
-                alert("ADMIN MODE ACTIVE");
+                alert("ADMIN MODE ACTIVE\n\n- Click images to UPLOAD to GitHub 'images/' folder.\n- Click Save to update the site.");
             } else {
                 alert("Wrong password!");
             }
@@ -567,11 +608,8 @@
         // --- BLOG SYSTEM ---
         function createNewPost() {
             if (!isAdmin) return;
-
-            // 1. Force switch to Grade 9 page so user sees the result
             switchPage('grade9');
             
-            // 2. Create the HTML for a new post
             const newPostHTML = `
                 <div class="glass-card" style="animation: fadeIn 0.5s ease;">
                     <button class="delete-btn" onclick="deletePost(this)"><i class="fas fa-trash"></i></button>
@@ -585,12 +623,8 @@
                     </p>
                 </div>
             `;
-
-            // 3. Insert it at the TOP of the blog container
             const container = document.getElementById('blog-container');
             container.insertAdjacentHTML('afterbegin', newPostHTML);
-
-            // 4. Scroll to it
             document.getElementById('blog-section-title').scrollIntoView();
         }
 
@@ -601,38 +635,91 @@
             }
         }
 
-        // --- IMAGE UPLOAD LOGIC ---
+        // --- IMAGE UPLOAD TO GITHUB (THE MAGIC) ---
         function triggerImageUpload(wrapper) {
             if (!isAdmin) return;
-            // Handle both generic wrappers and direct image clicks
             currentImgTarget = wrapper.tagName === 'IMG' ? wrapper : wrapper.querySelector('img');
             document.getElementById('img-upload').click();
         }
 
-        document.getElementById('img-upload').addEventListener('change', function (e) {
-            if (e.target.files && e.target.files[0]) {
-                const file = e.target.files[0];
-                if(file.size > 1000000) { 
-                    alert("Warning: This image is large (>1MB). It might prevent saving to GitHub. Use a smaller image.");
+        document.getElementById('img-upload').addEventListener('change', async function (e) {
+            if (!e.target.files || !e.target.files[0]) return;
+            
+            const file = e.target.files[0];
+            const fileName = "img_" + Date.now() + "_" + file.name.replace(/\s+/g, '-'); // Unique name
+            
+            showLoading(true, "Uploading image to GitHub...");
+
+            try {
+                // 1. Convert to Base64 for API
+                const base64Content = await toBase64(file);
+                const contentClean = base64Content.split(',')[1]; // Remove "data:image..." prefix
+
+                // 2. Upload to "images/" folder
+                const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/images/${fileName}`;
+                
+                const putRes = await fetch(apiUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${sessionToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: "Upload image " + fileName,
+                        content: contentClean,
+                        branch: BRANCH_NAME
+                    })
+                });
+
+                if(!putRes.ok) throw new Error("Image Upload Failed");
+
+                // 3. Construct the RAW URL (Works instantly for preview)
+                // Use Raw URL so it works immediately. 
+                const rawUrl = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${REPO_NAME}/${BRANCH_NAME}/images/${fileName}`;
+                
+                // 4. Update the DOM
+                if (currentImgTarget) {
+                    currentImgTarget.src = rawUrl;
                 }
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    if (currentImgTarget) {
-                        currentImgTarget.src = e.target.result;
-                    }
-                }
-                reader.readAsDataURL(file);
+                
+                alert("Image Uploaded Successfully!\n\nNote: Don't forget to click 'SAVE TO GITHUB' to save the new image link to your site.");
+
+            } catch (err) {
+                alert("Error uploading image: " + err.message);
+            } finally {
+                showLoading(false);
+                // Reset input so same file can be selected again if needed
+                document.getElementById('img-upload').value = '';
             }
         });
 
-        // --- SAVE TO GITHUB ---
+        // Helper: Convert File to Base64
+        function toBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        function showLoading(show, text = "") {
+            const el = document.getElementById('loading-overlay');
+            document.getElementById('loading-text').innerText = text;
+            el.style.display = show ? 'flex' : 'none';
+        }
+
+        // --- SAVE SITE (HTML ONLY) ---
         async function saveSite() {
-            const token = prompt("Paste GitHub Token to Save:");
-            if (!token) return;
+            if(!sessionToken) {
+                alert("Missing Session Token. Please reload and login again.");
+                return;
+            }
 
             const btn = document.querySelector('.admin-btn.save');
             const originalText = btn.innerText;
             btn.innerText = "SAVING...";
+            showLoading(true, "Saving Website Structure...");
 
             // CLEANUP BEFORE SAVE
             document.getElementById('admin-bar').style.display = 'none';
@@ -650,21 +737,21 @@
                 // GET SHA
                 const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${FILE_PATH}`;
                 const getRes = await fetch(apiUrl, {
-                    headers: { 'Authorization': `token ${token}` }
+                    headers: { 'Authorization': `token ${sessionToken}` }
                 });
                 
                 if(!getRes.ok) throw new Error("Repo not found");
                 const sha = (await getRes.json()).sha;
 
-                // UPLOAD
+                // UPLOAD HTML
                 const putRes = await fetch(apiUrl, {
                     method: 'PUT',
                     headers: {
-                        'Authorization': `token ${token}`,
+                        'Authorization': `token ${sessionToken}`,
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        message: "Update via Admin Panel",
+                        message: "Update site content",
                         content: btoa(unescape(encodeURIComponent(htmlContent))),
                         sha: sha,
                         branch: BRANCH_NAME
@@ -672,7 +759,7 @@
                 });
 
                 if (putRes.ok) {
-                    alert("SAVED! \n\nIMPORTANT: GitHub takes 60 seconds to update. \nIf you refresh now, you might see the old version. Wait 1 minute.");
+                    alert("WEBSITE SAVED!\n\nChanges are live. Wait 60 seconds for GitHub Pages to refresh.");
                     btn.innerText = "SAVED!";
                     setTimeout(() => btn.innerText = originalText, 2000);
                 } else {
@@ -681,9 +768,10 @@
             } catch (err) {
                 alert("Error: " + err.message);
                 btn.innerText = "TRY AGAIN";
+            } finally {
+                showLoading(false);
             }
         }
     </script>
-
-
-</body></html>
+</body>
+</html>

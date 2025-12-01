@@ -1,14 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
+<html lang='en'><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shonazarov Abdurahmon | IB Portfolio</title>
     <!-- Fonts & Icons -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;800&family=Poppins:wght@300;400;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;800&amp;family=Poppins:wght@300;400;600&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
@@ -383,7 +379,7 @@
     </style>
 </head>
 
-<body>
+<body class="">
 
     <div class="bg-glow">
         <div class="orb orb-1"></div>
@@ -397,7 +393,7 @@
             <i class="fas fa-bars"></i>
         </div>
         <ul class="nav-menu" id="navMenu">
-            <li class="nav-item"><a class="nav-link active" onclick="switchPage('home'); toggleMenu()">Home</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="switchPage('home'); toggleMenu()">Home</a></li>
             <li class="nav-item">
                 <div class="nav-link">Grade 8 <i class="fas fa-chevron-down"></i></div>
                 <div class="dropdown">
@@ -407,17 +403,17 @@
             <li class="nav-item">
                 <div class="nav-link">Grade 9 <i class="fas fa-chevron-down"></i></div>
                 <div class="dropdown">
-                    <a onclick="switchPage('grade9'); toggleMenu()">Subjects & Blog</a>
+                    <a onclick="switchPage('grade9'); toggleMenu()">Subjects &amp; Blog</a>
                 </div>
             </li>
         </ul>
     </nav>
 
     <!-- ADMIN PANEL -->
-    <div id="admin-bar">
+    <div id="admin-bar" style="display: none;">
         <span style="color:white; font-weight:600;">ADMIN</span>
         <button class="admin-btn add-post" onclick="createNewPost()">+ NEW POST</button>
-        <button class="admin-btn save" onclick="saveSite()">SAVE TO GITHUB</button>
+        <button class="admin-btn save" onclick="saveSite()">SAVING...</button>
         <button class="admin-btn cancel" onclick="location.reload()">CANCEL</button>
     </div>
 
@@ -425,17 +421,16 @@
     <input type="file" id="img-upload" style="display: none;" accept="image/*">
 
     <!-- ======================= HOME PAGE ======================= -->
-    <section id="home" class="page-section active-page">
+    <section id="home" class="page-section">
         <div class="hero-container">
             <div class="profile-frame" onclick="triggerImageUpload(this)">
                 <!-- Default Placeholder Image -->
                 <img src="./image.png" class="profile-img">
             </div>
             <div class="hero-text">
-                <div class="editable" contenteditable="false">IB STUDENT &middot; CLASS OF 2025</div>
+                <div class="editable" contenteditable="false">IB STUDENT · CLASS OF 2025</div>
                 <h1 class="editable" contenteditable="false">Shonazarov<br>Abdurahmon</h1>
-                <p class="editable" contenteditable="false"
-                    style="color: var(--text-muted); font-size: 1.1rem; max-width: 500px; margin-bottom: 30px;">
+                <p class="editable" contenteditable="false" style="color: var(--text-muted); font-size: 1.1rem; max-width: 500px; margin-bottom: 30px;">
                     A 9th-grade strategist with a passion for Chess, the agility of Volleyball, and the inquiring mind
                     of an IB learner.
                 </p>
@@ -474,9 +469,9 @@
     </section>
 
     <!-- ======================= GRADE 9 PAGE (BLOG AREA) ======================= -->
-    <section id="grade9" class="page-section">
+    <section id="grade9" class="page-section active-page">
         <div class="section-container">
-            <h1 class="editable" contenteditable="false">Grade 9 Portfolio & Blog</h1>
+            <h1 class="editable" contenteditable="false">Grade 9 Portfolio &amp; Blog</h1>
 
             <!-- ACADEMIC LIST -->
             <div style="margin-top: 40px;">
@@ -484,32 +479,35 @@
                 <div class="glass-card" style="margin-top: 20px;">
                     <p class="editable" contenteditable="false"><strong>Mathematics:</strong> Exploring Quadratics.</p>
                     <hr style="border-color: var(--glass-border); margin: 10px 0;">
-                    <p class="editable" contenteditable="false"><strong>Science:</strong> Biology and Physics.</p>
+                    <p class="editable" contenteditable="false"><br></p>
                 </div>
             </div>
 
             <!-- BLOG / PROJECTS CONTAINER -->
             <div style="margin-top: 40px;" id="blog-section-title">
-                <h2 class="editable" contenteditable="false" style="color:var(--primary);">Projects & Blog</h2>
+                <h2 class="editable" contenteditable="false" style="color:var(--primary);">Projects &amp; Blog</h2>
                 <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 20px;">
                     *Admin Note: Click "+ NEW POST" to add entries here.*
                 </p>
                 
                 <!-- NEW POSTS WILL BE ADDED HERE -->
                 <div id="blog-container" class="grid-3">
+                <div class="glass-card" style="animation: fadeIn 0.5s ease;">
+                    <button class="delete-btn" onclick="deletePost(this)"><i class="fas fa-trash"></i></button>
+                    <div onclick="triggerImageUpload(this)">
+                        <img src="https://via.placeholder.com/600x400/1e293b/38bdf8?text=Click+to+Add+Image" class="blog-img">
+                    </div>
+                    <span class="blog-date editable" contenteditable="false">Today's Date</span>
+                    <h3 class="editable" contenteditable="false">yo sup my nigga</h3>
+                    <p class="editable" contenteditable="false" style="color: var(--text-muted); margin-top:10px;">
+                        today the classes was awful i hated it</p>
+                </div>
+            
+                
+            
                     
                     <!-- Example Post -->
-                    <div class="glass-card">
-                        <button class="delete-btn" onclick="deletePost(this)"><i class="fas fa-trash"></i></button>
-                        <div onclick="triggerImageUpload(this)">
-                            <img src="https://via.placeholder.com/600x400/1e293b/38bdf8?text=Click+to+Add+Image" class="blog-img">
-                        </div>
-                        <span class="blog-date editable" contenteditable="false">October 2025</span>
-                        <h3 class="editable" contenteditable="false">Welcome to my Portfolio</h3>
-                        <p class="editable" contenteditable="false" style="color: var(--text-muted); margin-top:10px;">
-                            This is my first entry. I will be documenting my IB journey here.
-                        </p>
-                    </div>
+                    
 
                 </div>
             </div>
@@ -517,7 +515,7 @@
     </section>
 
     <footer>
-        <p>&copy; 2025 Shonazarov Abdurahmon. IB Portfolio.</p>
+        <p>© 2025 Shonazarov Abdurahmon. IB Portfolio.</p>
         <i class="fas fa-lock admin-trigger" onclick="adminLogin()"></i>
     </footer>
 
@@ -686,5 +684,6 @@
             }
         }
     </script>
-</body>
-</html>
+
+
+</body></html>

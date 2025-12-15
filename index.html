@@ -924,6 +924,10 @@
             document.body.classList.add('admin-active');
             toggleEditMode(true);
         }
+    // FORCE CLOSE: This ensures the panel is always closed when the site loads
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById('admin-panel').classList.remove('open');
+});
 </script>
    
 

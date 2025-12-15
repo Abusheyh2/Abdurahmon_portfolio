@@ -575,7 +575,7 @@
     <input type="file" id="img-upload" style="display: none;" accept="image/*" onchange="handleImageUpload(event)">
 
     <!-- HOME PAGE -->
-    <section id="home" class="page-section active-page">
+    <section id="home" class="page-section">
         <div class="hero-container">
             <div class="profile-frame" onclick="triggerImageUpload(this)">
                 <img src="./image.png" class="profile-img" onerror="this.src='https://via.placeholder.com/320x320/1e293b/38bdf8?text=Profile+Photo'">
@@ -618,10 +618,10 @@
         </div>
     </section>
 
-    <section id="grade8-projects" class="page-section">
+    <section id="grade8-projects" class="page-section active-page">
         <div class="section-container">
             <h1 class="editable" contenteditable="false">Grade 8 - Projects &amp; Blog</h1>
-            <div class="grid-3" data-section="grade8-projects"></div>
+            <div class="grid-3" data-section="grade8-projects"><div class="glass-card"><button class="delete-btn" onclick="deleteCard(this)"><i class="fas fa-trash"></i></button><h3 class="editable" contenteditable="false">New Card</h3><p class="editable" contenteditable="false">something</p></div></div>
         </div>
     </section>
 

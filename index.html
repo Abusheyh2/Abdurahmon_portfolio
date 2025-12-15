@@ -832,59 +832,56 @@
 
         // ================= GITHUB API INTEGRATION =================
 
-        async function saveSite() {
+       async function saveSite() {
             if (!isAdmin) return;
 
             // 1. Check for Token
             if (!githubToken) {
                 githubToken = prompt("Please enter your GitHub Personal Access Token (Classic):");
                 if (!githubToken) return alert("Token required to save!");
-                // Ask to save locally for convenience
-                if(confirm("Save token in browser for next time? (Only do this on your private computer)")) {
+                if(confirm("Save token in browser for next time?")) {
                     localStorage.setItem("gh_token", githubToken);
                 }
             }
 
             const btn = document.querySelector('.admin-btn.success');
             const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving to GitHub...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
 
             try {
-                // 2. Prepare the HTML content
-                // We temporarily turn off admin mode so the saved file looks "clean" to visitors
+                // --- CLEAN UP BEFORE SAVING ---
+                // We hide the admin panel and edit modes so they don't get saved into the file
+                const panel = document.getElementById('admin-panel');
+                const wasOpen = panel.classList.contains('open'); // Remember if it was open
+                
+                panel.classList.remove('open'); // Close it for the picture
                 document.body.classList.remove('admin-active');
                 toggleEditMode(false);
                 
-                // Get the entire HTML string
+                // Get the Clean HTML
                 let htmlContent = document.documentElement.outerHTML;
 
-                // Re-enable admin mode for the current user immediately
+                // --- RESTORE AFTER SAVING ---
+                // Put everything back so you can keep working
                 document.body.classList.add('admin-active');
+                if(wasOpen) panel.classList.add('open');
                 toggleEditMode(true);
 
-                // 3. Get the current file's SHA (required by GitHub API to update)
+                // --- GITHUB API UPLOAD ---
                 const getUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${FILE_PATH}?ref=${BRANCH_NAME}`;
                 
                 const getResponse = await fetch(getUrl, {
-                    headers: {
-                        "Authorization": `token ${githubToken}`,
-                        "Accept": "application/vnd.github.v3+json"
-                    }
+                    headers: { "Authorization": `token ${githubToken}` }
                 });
 
-                if (!getResponse.ok) throw new Error("Could not find file on GitHub. Check Repo Name/Token.");
+                if (!getResponse.ok) throw new Error("Could not find file on GitHub.");
                 const fileData = await getResponse.json();
-                const currentSha = fileData.sha;
 
-                // 4. Encode HTML to Base64 (handling Unicode/Emojis correctly)
-                const base64Content = btoa(unescape(encodeURIComponent(htmlContent)));
-
-                // 5. Send PUT request to update file
                 const putBody = {
                     message: `Update via Admin Panel: ${new Date().toLocaleString()}`,
                     committer: { name: GITHUB_USERNAME, email: EMAIL },
-                    content: base64Content,
-                    sha: currentSha,
+                    content: btoa(unescape(encodeURIComponent(htmlContent))),
+                    sha: fileData.sha,
                     branch: BRANCH_NAME
                 };
 
@@ -898,16 +895,14 @@
                 });
 
                 if (putResponse.ok) {
-                    alert("✅ Success! Website updated live on GitHub.");
+                    alert("✅ Success! Site updated.");
                 } else {
-                    const err = await putResponse.json();
-                    throw new Error("GitHub Error: " + err.message);
+                    throw new Error("GitHub Error");
                 }
 
             } catch (error) {
                 console.error(error);
                 alert("❌ Save Failed: " + error.message);
-                // If token is bad, clear it
                 if(error.message.includes("Bad credentials")) {
                     localStorage.removeItem("gh_token");
                     githubToken = null;

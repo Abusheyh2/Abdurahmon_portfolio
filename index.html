@@ -36,7 +36,7 @@
 
         [contenteditable="true"] {
             outline: 2px dashed var(--accent);
-            padding: 2px;
+            padding: 5px;
             background: rgba(251, 191, 36, 0.1);
             border-radius: 4px;
             min-height: 20px;
@@ -73,6 +73,7 @@
             margin: 0;
             font-family: 'Montserrat', sans-serif;
             font-size: 1.5rem;
+            color: #0f172a;
         }
 
         .admin-toggle {
@@ -423,14 +424,18 @@
             border-top: 1px solid var(--glass-border);
             margin-top: 50px;
             font-size: 0.8rem;
+            position: relative;
         }
 
         .admin-trigger {
             color: #1e293b;
             cursor: pointer;
             transition: 0.3s;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             margin-left: 10px;
+            padding: 10px;
+            position: relative;
+            z-index: 50;
         }
 
         .admin-trigger:hover { color: var(--text-muted); }
@@ -545,7 +550,7 @@
         <div class="admin-section">
             <h3><i class="fas fa-cog"></i> Settings</h3>
             <button class="admin-btn" onclick="exportBackup()">
-                <i class="fas fa-download"></i> Download Backup
+                <i class="fas fa-download"></i> Download HTML Backup
             </button>
             <button class="admin-btn danger" onclick="clearSection()">
                 <i class="fas fa-trash"></i> Clear Current Section
@@ -555,7 +560,7 @@
         <div class="admin-section">
             <h3><i class="fas fa-save"></i> Save Changes</h3>
             <button class="admin-btn success" onclick="saveSite()">
-                <i class="fas fa-cloud-upload-alt"></i> Save to GitHub
+                <i class="fas fa-cloud-upload-alt"></i> Save/Export
             </button>
             <button class="admin-btn danger" onclick="location.reload()">
                 <i class="fas fa-times"></i> Cancel & Reload
@@ -567,13 +572,13 @@
         <i class="fas fa-tools"></i>
     </button>
 
-    <input type="file" id="img-upload" style="display: none;" accept="image/*">
+    <input type="file" id="img-upload" style="display: none;" accept="image/*" onchange="handleImageUpload(event)">
 
     <!-- HOME PAGE -->
     <section id="home" class="page-section active-page">
         <div class="hero-container">
             <div class="profile-frame" onclick="triggerImageUpload(this)">
-                <img src="./image.png" class="profile-img">
+                <img src="./image.png" class="profile-img" onerror="this.src='https://via.placeholder.com/320x320/1e293b/38bdf8?text=Profile+Photo'">
             </div>
             <div class="hero-text">
                 <div class="editable" contenteditable="false">IB STUDENT · CLASS OF 2025</div>
@@ -706,15 +711,10 @@
 
     <footer>
         <p class="editable" contenteditable="false">© 2025 Shonazarov Abdurahmon. IB Portfolio.</p>
-        <i class="fas fa-lock admin-trigger" onclick="adminLogin()"></i>
+        <i class="fas fa-lock admin-trigger" onclick="adminLogin()" title="Admin Login"></i>
     </footer>
 
     <script>
-        const GITHUB_USERNAME = "Abusheyh2";
-        const REPO_NAME = "Abdurahmon_portfolio";
-        const BRANCH_NAME = "main";
-        const FILE_PATH = "index.html";
-
         let isAdmin = false;
         let currentImgTarget = null;
         let currentSection = 'home';
@@ -728,6 +728,7 @@
             document.getElementById(pageId).classList.add('active-page');
             currentSection = pageId;
             window.scrollTo(0, 0);
+            toggleMenu(); // Close mobile menu on selection
         }
 
         function adminLogin() {
@@ -752,11 +753,14 @@
             document.getElementById('admin-panel').classList.toggle('open');
         }
 
-        function addCard(section) {
+        function addCard(mode) {
             if (!isAdmin) return;
             
-            const activePage = document.querySelector('.page-section.active-page');
-            const container = activePage.querySelector('[data-section]') || activePage.querySelector('.grid-3');
+            let container;
+            if(mode === 'current') {
+                const activePage = document.querySelector('.page-section.active-page');
+                container = activePage.querySelector('[data-section]') || activePage.querySelector('.grid-3');
+            }
             
             if (!container) {
                 alert("No container found in current section!");
@@ -772,7 +776,7 @@
                     <span class="blog-date editable" contenteditable="true">${new Date().toLocaleDateString()}</span>
                     <h3 class="editable" contenteditable="true">New Title</h3>
                     <p class="editable" contenteditable="true" style="color: var(--text-muted); margin-top:10px;">
-                        Click to edit content...
+                        Click to edit content description...
                     </p>
                 </div>
             `;
@@ -783,7 +787,7 @@
         function deleteCard(btn) {
             if (!isAdmin) return;
             if (confirm("Delete this card?")) {
-                btn.parentElement.remove();
+                btn.closest('.glass-card').remove();
             }
         }
 
@@ -805,4 +809,92 @@
                             <button class="delete-btn" onclick="deleteCard(this)"><i class="fas fa-trash"></i></button>
                             <h3 class="editable" contenteditable="true">New Card</h3>
                             <p class="editable" contenteditable="true" style="color: var(--text-muted); margin-top:10px;">
-                                Content
+                                New Content Added...
+                            </p>
+                        </div>`;
+                    container.insertAdjacentHTML('beforeend', newCard);
+                    alert("Card added to " + choice);
+                }
+            } else {
+                alert("Invalid section name");
+            }
+        }
+
+        /* Image Upload Logic */
+        function triggerImageUpload(element) {
+            if(!isAdmin) return;
+            
+            // Check if clicked element is div or img
+            if(element.tagName === 'IMG') {
+                currentImgTarget = element;
+            } else {
+                currentImgTarget = element.querySelector('img');
+            }
+            
+            document.getElementById('img-upload').click();
+        }
+
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file && currentImgTarget) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    currentImgTarget.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        /* Site Save/Export Logic */
+        function saveSite() {
+            // Since we don't have a backend, we'll download the HTML
+            exportBackup();
+        }
+
+        function exportBackup() {
+            // Remove admin-active class before saving
+            document.body.classList.remove('admin-active');
+            toggleEditMode(false);
+
+            const htmlContent = document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'portfolio_backup.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            // Restore admin mode
+            if(isAdmin) {
+                document.body.classList.add('admin-active');
+                toggleEditMode(true);
+            }
+        }
+
+        function clearSection() {
+            if(!isAdmin) return;
+            const activePage = document.querySelector('.page-section.active-page');
+            const container = activePage.querySelector('[data-section]') || activePage.querySelector('.grid-3');
+            
+            if(container && confirm("WARNING: This will delete ALL cards in this section. Are you sure?")) {
+                container.innerHTML = '';
+            }
+        }
+
+        function editColors() {
+            if(!isAdmin) return;
+            const newPrimary = prompt("Enter new Primary Color (Hex or name):", "#38bdf8");
+            if(newPrimary) {
+                document.documentElement.style.setProperty('--primary', newPrimary);
+            }
+        }
+
+        function editFonts() {
+            if(!isAdmin) return;
+            alert("To change fonts, you must modify the Google Fonts import in the HTML code directly.");
+        }
+    </script>
+</body>
+</html>

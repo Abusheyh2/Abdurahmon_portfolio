@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang='en'><head>
+<html lang='en'>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shonazarov Abdurahmon | IB Portfolio</title>
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;800&amp;family=Poppins:wght@300;400;600&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        /* --- CORE VARIABLES --- */
         :root {
             --bg-dark: #0f172a;
             --primary: #38bdf8;
@@ -20,7 +19,6 @@
             --text-muted: #94a3b8;
         }
 
-        /* --- RESET & BASIC SETUP --- */
         * {
             margin: 0;
             padding: 0;
@@ -36,51 +34,133 @@
             line-height: 1.6;
         }
 
-        /* --- EDITABLE ZONES --- */
         [contenteditable="true"] {
             outline: 2px dashed var(--accent);
             padding: 2px;
             background: rgba(251, 191, 36, 0.1);
             border-radius: 4px;
+            min-height: 20px;
         }
 
-        /* --- ADMIN PANEL STYLES --- */
-        #admin-bar {
+        /* ADMIN PANEL STYLES */
+        #admin-panel {
             position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
             background: #1e293b;
-            padding: 15px 20px;
-            border-radius: 50px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            display: none;
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            overflow-y: auto;
+            border-left: 2px solid var(--primary);
+        }
+
+        #admin-panel.open {
+            right: 0;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .admin-header h2 {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+        }
+
+        .admin-toggle {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
             z-index: 9999;
-            border: 2px solid var(--primary);
+            box-shadow: 0 5px 20px rgba(56, 189, 248, 0.5);
+            display: none;
             align-items: center;
-            gap: 10px;
-            white-space: nowrap;
-            flex-wrap: wrap;
             justify-content: center;
+            font-size: 1.5rem;
+            color: #0f172a;
+            transition: 0.3s;
+        }
+
+        .admin-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        body.admin-active .admin-toggle {
+            display: flex;
+        }
+
+        .admin-section {
+            padding: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .admin-section h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
         }
 
         .admin-btn {
-            background: var(--primary);
-            color: #0f172a;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 20px;
-            font-weight: bold;
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            border-radius: 8px;
             cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.8rem;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .admin-btn.save { background: #22c55e; color: white; }
-        .admin-btn.add-post { background: var(--accent); color: #0f172a; }
-        .admin-btn.cancel { background: #ef4444; color: white; }
+        .admin-btn:hover {
+            background: var(--primary);
+            color: #0f172a;
+            transform: translateX(5px);
+        }
 
-        /* --- ANIMATED BACKGROUND --- */
+        .admin-btn i {
+            width: 20px;
+        }
+
+        .admin-btn.danger {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+        }
+
+        .admin-btn.danger:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+        .admin-btn.success {
+            background: rgba(34, 197, 94, 0.2);
+            border-color: #22c55e;
+        }
+
+        .admin-btn.success:hover {
+            background: #22c55e;
+            color: white;
+        }
+
         .bg-glow {
             position: fixed;
             width: 100vw;
@@ -120,7 +200,6 @@
             100% { transform: translate(30px, 50px); }
         }
 
-        /* --- NAVIGATION --- */
         nav {
             display: flex;
             justify-content: space-between;
@@ -203,7 +282,6 @@
             background: rgba(56, 189, 248, 0.1);
         }
 
-        /* --- PAGE SECTIONS --- */
         .page-section {
             display: none;
             padding-top: 100px;
@@ -219,7 +297,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- HERO --- */
         .hero-container {
             display: flex;
             align-items: center;
@@ -256,7 +333,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* --- CARDS & GRID --- */
         .section-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -276,10 +352,15 @@
             padding: 25px;
             border-radius: 16px;
             position: relative;
-            margin-bottom: 20px; 
+            margin-bottom: 20px;
             transition: 0.3s;
         }
-        
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
         .blog-img {
             width: 100%;
             height: 200px;
@@ -289,7 +370,7 @@
             cursor: pointer;
             border: 2px dashed rgba(255,255,255,0.1);
         }
-        
+
         .blog-date {
             font-size: 0.8rem;
             color: var(--primary);
@@ -297,30 +378,44 @@
             display: block;
         }
 
-        /* --- DELETE BUTTON (ADMIN ONLY) --- */
         .delete-btn {
             position: absolute;
             top: 10px;
             right: 10px;
             background: #ef4444;
             color: white;
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             border: none;
             cursor: pointer;
-            display: none; /* Hidden unless in admin mode */
+            display: none;
             align-items: center;
             justify-content: center;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             z-index: 10;
-        }
-        
-        body.admin-active .delete-btn {
-            display: flex; /* Show when admin mode is active */
+            transition: 0.3s;
         }
 
-        /* --- FOOTER --- */
+        .delete-btn:hover {
+            transform: scale(1.1);
+        }
+
+        body.admin-active .delete-btn {
+            display: flex;
+        }
+
+        .content-section {
+            margin-top: 40px;
+        }
+
+        .section-title {
+            color: var(--primary);
+            margin-bottom: 20px;
+            border-left: 5px solid var(--primary);
+            padding-left: 15px;
+        }
+
         footer {
             text-align: center;
             padding: 40px;
@@ -334,11 +429,12 @@
             color: #1e293b;
             cursor: pointer;
             transition: 0.3s;
+            font-size: 1.2rem;
+            margin-left: 10px;
         }
 
         .admin-trigger:hover { color: var(--text-muted); }
 
-        /* --- MOBILE MENU --- */
         .menu-toggle {
             display: none;
             font-size: 1.5rem;
@@ -347,6 +443,10 @@
         }
 
         @media (max-width: 768px) {
+            #admin-panel {
+                width: 100%;
+                right: -100%;
+            }
             .menu-toggle { display: block; }
             .hero-text h1 { font-size: 2.5rem; }
             .nav-menu {
@@ -363,24 +463,11 @@
                 gap: 20px;
             }
             .nav-menu.active { display: flex; }
-            .dropdown {
-                position: static;
-                opacity: 1;
-                visibility: visible;
-                transform: none;
-                background: transparent;
-                box-shadow: none;
-                border: none;
-                padding: 10px 0 0 0;
-                display: none;
-            }
-            .nav-item:hover .dropdown { display: block; }
         }
     </style>
 </head>
 
-<body class="">
-
+<body>
     <div class="bg-glow">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
@@ -388,64 +475,126 @@
 
     <!-- Navigation -->
     <nav>
-        <div class="logo">SHONAZAROV <span>A.</span></div>
+        <div class="logo editable" contenteditable="false">SHONAZAROV <span>A.</span></div>
         <div class="menu-toggle" onclick="toggleMenu()">
             <i class="fas fa-bars"></i>
         </div>
-        <ul class="nav-menu active" id="navMenu">
-            <li class="nav-item"><a class="nav-link" onclick="switchPage('home'); toggleMenu()">Home</a></li>
+        <ul class="nav-menu" id="navMenu">
+            <li class="nav-item"><a class="nav-link" onclick="switchPage('home')">Home</a></li>
             <li class="nav-item">
                 <div class="nav-link">Grade 8 <i class="fas fa-chevron-down"></i></div>
                 <div class="dropdown">
-                    <a onclick="switchPage('grade8'); toggleMenu()">Archive</a>
+                    <a onclick="switchPage('grade8-subjects')">Subjects</a>
+                    <a onclick="switchPage('grade8-projects')">Projects</a>
+                    <a onclick="switchPage('grade8-creativity')">Creativity</a>
+                    <a onclick="switchPage('grade8-service')">Community & Service</a>
+                    <a onclick="switchPage('grade8-achievements')">Achievements</a>
+                    <a onclick="switchPage('grade8-reflection')">Reflection Journal</a>
+                    <a onclick="switchPage('grade8-goals')">Goals</a>
                 </div>
             </li>
             <li class="nav-item">
                 <div class="nav-link">Grade 9 <i class="fas fa-chevron-down"></i></div>
                 <div class="dropdown">
-                    <a onclick="switchPage('grade9'); toggleMenu()">Subjects &amp; Blog</a>
+                    <a onclick="switchPage('grade9-subjects')">Subjects</a>
+                    <a onclick="switchPage('grade9-projects')">Projects</a>
+                    <a onclick="switchPage('grade9-creativity')">Creativity</a>
+                    <a onclick="switchPage('grade9-service')">Community & Service</a>
+                    <a onclick="switchPage('grade9-achievements')">Achievements</a>
+                    <a onclick="switchPage('grade9-reflection')">Reflection Journal</a>
+                    <a onclick="switchPage('grade9-goals')">Goals</a>
                 </div>
             </li>
         </ul>
     </nav>
 
     <!-- ADMIN PANEL -->
-    <div id="admin-bar" style="display: none;">
-        <span style="color:white; font-weight:600;">ADMIN</span>
-        <button class="admin-btn add-post" onclick="createNewPost()">+ NEW POST</button>
-        <button class="admin-btn save" onclick="saveSite()">SAVING...</button>
-        <button class="admin-btn cancel" onclick="location.reload()">CANCEL</button>
+    <div id="admin-panel">
+        <div class="admin-header">
+            <h2><i class="fas fa-shield-alt"></i> Admin Control Panel</h2>
+            <p style="font-size: 0.85rem; margin-top: 5px; opacity: 0.9;">Full site editing enabled</p>
+        </div>
+
+        <div class="admin-section">
+            <h3><i class="fas fa-plus-circle"></i> Add Content</h3>
+            <button class="admin-btn" onclick="addCard('current')">
+                <i class="fas fa-file-alt"></i> Add Card to Current Section
+            </button>
+            <button class="admin-btn" onclick="showSectionSelector()">
+                <i class="fas fa-layer-group"></i> Add to Specific Section
+            </button>
+        </div>
+
+        <div class="admin-section">
+            <h3><i class="fas fa-image"></i> Images</h3>
+            <button class="admin-btn" onclick="document.getElementById('img-upload').click()">
+                <i class="fas fa-upload"></i> Upload Image (click any image first)
+            </button>
+        </div>
+
+        <div class="admin-section">
+            <h3><i class="fas fa-palette"></i> Customization</h3>
+            <button class="admin-btn" onclick="editColors()">
+                <i class="fas fa-paint-brush"></i> Change Theme Colors
+            </button>
+            <button class="admin-btn" onclick="editFonts()">
+                <i class="fas fa-font"></i> Change Fonts
+            </button>
+        </div>
+
+        <div class="admin-section">
+            <h3><i class="fas fa-cog"></i> Settings</h3>
+            <button class="admin-btn" onclick="exportBackup()">
+                <i class="fas fa-download"></i> Download Backup
+            </button>
+            <button class="admin-btn danger" onclick="clearSection()">
+                <i class="fas fa-trash"></i> Clear Current Section
+            </button>
+        </div>
+
+        <div class="admin-section">
+            <h3><i class="fas fa-save"></i> Save Changes</h3>
+            <button class="admin-btn success" onclick="saveSite()">
+                <i class="fas fa-cloud-upload-alt"></i> Save to GitHub
+            </button>
+            <button class="admin-btn danger" onclick="location.reload()">
+                <i class="fas fa-times"></i> Cancel & Reload
+            </button>
+        </div>
     </div>
 
-    <!-- Hidden File Input -->
+    <button class="admin-toggle" onclick="toggleAdminPanel()">
+        <i class="fas fa-tools"></i>
+    </button>
+
     <input type="file" id="img-upload" style="display: none;" accept="image/*">
 
-    <!-- ======================= HOME PAGE ======================= -->
-    <section id="home" class="page-section">
+    <!-- HOME PAGE -->
+    <section id="home" class="page-section active-page">
         <div class="hero-container">
             <div class="profile-frame" onclick="triggerImageUpload(this)">
-                <!-- Default Placeholder Image -->
                 <img src="./image.png" class="profile-img">
             </div>
             <div class="hero-text">
                 <div class="editable" contenteditable="false">IB STUDENT · CLASS OF 2025</div>
                 <h1 class="editable" contenteditable="false">Shonazarov<br>Abdurahmon</h1>
                 <p class="editable" contenteditable="false" style="color: var(--text-muted); font-size: 1.1rem; max-width: 500px; margin-bottom: 30px;">
-                    A 9th-grade strategist with a passion for Chess, the agility of Volleyball, and the inquiring mind
-                    of an IB learner.
+                    A 9th-grade strategist with a passion for Chess, the agility of Volleyball, and the inquiring mind of an IB learner.
                 </p>
             </div>
         </div>
         <div class="section-container">
-            <h2 class="editable" contenteditable="false" style="border-left: 5px solid var(--primary); padding-left: 15px;">My Passions</h2>
-            <div class="grid-3">
+            <h2 class="section-title editable" contenteditable="false">My Passions</h2>
+            <div class="grid-3" data-section="home-passions">
                 <div class="glass-card">
+                    <button class="delete-btn" onclick="deleteCard(this)"><i class="fas fa-trash"></i></button>
                     <h3 class="editable" contenteditable="false">Chess</h3>
                     <p class="editable" contenteditable="false" style="color: var(--text-muted); margin-top:10px;">
                         My arena for strategic thinking.
                     </p>
                 </div>
                 <div class="glass-card">
+                    <button class="delete-btn" onclick="deleteCard(this)"><i class="fas fa-trash"></i></button>
                     <h3 class="editable" contenteditable="false">Volleyball</h3>
                     <p class="editable" contenteditable="false" style="color: var(--text-muted); margin-top:10px;">
                         Training teamwork and reflexes.
@@ -455,72 +604,121 @@
         </div>
     </section>
 
-    <!-- ======================= GRADE 8 PAGE ======================= -->
-    <section id="grade8" class="page-section">
+    <!-- GRADE 8 SECTIONS -->
+    <section id="grade8-subjects" class="page-section">
         <div class="section-container">
-            <h1 class="editable" contenteditable="false">Grade 8 Archive</h1>
-            <div class="grid-3">
-                <div class="glass-card">
-                    <h3 class="editable" contenteditable="false"><br></h3>
-                    <p class="editable" contenteditable="false"><br></p>
-                </div>
-            </div>
+            <h1 class="editable" contenteditable="false">Grade 8 - Subjects</h1>
+            <div class="grid-3" data-section="grade8-subjects"></div>
         </div>
     </section>
 
-    <!-- ======================= GRADE 9 PAGE (BLOG AREA) ======================= -->
-    <section id="grade9" class="page-section active-page">
+    <section id="grade8-projects" class="page-section">
         <div class="section-container">
-            <h1 class="editable" contenteditable="false">Grade 9 Portfolio &amp; Blog</h1>
+            <h1 class="editable" contenteditable="false">Grade 8 - Projects & Blog</h1>
+            <div class="grid-3" data-section="grade8-projects"></div>
+        </div>
+    </section>
 
-            <!-- ACADEMIC LIST -->
-            <div style="margin-top: 40px;">
-                <h2 class="editable" contenteditable="false" style="color:var(--primary);">Academic Subjects</h2>
-                <div class="glass-card" style="margin-top: 20px;">
-                    <p class="editable" contenteditable="false"><br></p>
-                    <hr style="border-color: var(--glass-border); margin: 10px 0;">
-                    <p class="editable" contenteditable="false"><br></p>
-                </div>
-            </div>
+    <section id="grade8-creativity" class="page-section">
+        <div class="section-container">
+            <h1 class="editable" contenteditable="false">Grade 8 - Creativity</h1>
+            <div class="grid-3" data-section="grade8-creativity"></div>
+        </div>
+    </section>
 
-            <!-- BLOG / PROJECTS CONTAINER -->
-            <div style="margin-top: 40px;" id="blog-section-title">
-                <h2 class="editable" contenteditable="false" style="color:var(--primary);">Projects &amp; Blog</h2>
-                <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 20px;">
-                    *Admin Note: Click "+ NEW POST" to add entries here.*
-                </p>
-                
-                <!-- NEW POSTS WILL BE ADDED HERE -->
-                <div id="blog-container" class="grid-3">
-                
-            
-                
-            
-                    
-                    <!-- Example Post -->
-                    
+    <section id="grade8-service" class="page-section">
+        <div class="section-container">
+            <h1 class="editable" contenteditable="false">Grade 8 - Community & Service</h1>
+            <div class="grid-3" data-section="grade8-service"></div>
+        </div>
+    </section>
 
-                </div>
-            </div>
+    <section id="grade8-achievements" class="page-section">
+        <div class="section-container">
+            <h1 class="editable" contenteditable="false">Grade 8 - Achievements</h1>
+            <div class="grid-3" data-section="grade8-achievements"></div>
+        </div>
+    </section>
+
+    <section id="grade8-reflection" class="page-section">
+        <div class="section-container">
+            <h1 class="editable" contenteditable="false">Grade 8 - Reflection Journal</h1>
+            <div class="grid-3" data-section="grade8-reflection"></div>
+        </div>
+    </section>
+
+    <section id="grade8-goals" class="page-section">
+        <div class="section-container">
+            <h1 class="editable" contenteditable="false">Grade 8 - Goals & Personal Growth</h1>
+            <div class="grid-3" data-section="grade8-goals"></div>
+        </div>
+    </section>
+
+    <!-- GRADE 9 SECTIONS -->
+    <section id="grade9-subjects" class="page-section">
+        <div class="section-container">
+            <h1 class="editable" contenteditable="false">Grade 9 - Subjects</h1>
+            <div class="grid-3" data-section="grade9-subjects"></div>
+        </div>
+    </section>
+
+    <section id="grade9-projects" class="page-section">
+        <div class="section-container">
+            <h1 class="editable" contenteditable="false">Grade 9 - Projects & Blog</h1>
+            <div class="grid-3" data-section="grade9-projects"></div>
+        </div>
+    </section>
+
+    <section id="grade9-creativity" class="page-section">
+        <div class="section-container">
+            <h1 class="editable" contenteditable="false">Grade 9 - Creativity</h1>
+            <div class="grid-3" data-section="grade9-creativity"></div>
+        </div>
+    </section>
+
+    <section id="grade9-service" class="page-section">
+        <div class="section-container">
+            <h1 class="editable" contenteditable="false">Grade 9 - Community & Service</h1>
+            <div class="grid-3" data-section="grade9-service"></div>
+        </div>
+    </section>
+
+    <section id="grade9-achievements" class="page-section">
+        <div class="section-container">
+            <h1 class="editable" contenteditable="false">Grade 9 - Achievements</h1>
+            <div class="grid-3" data-section="grade9-achievements"></div>
+        </div>
+    </section>
+
+    <section id="grade9-reflection" class="page-section">
+        <div class="section-container">
+            <h1 class="editable" contenteditable="false">Grade 9 - Reflection Journal</h1>
+            <div class="grid-3" data-section="grade9-reflection"></div>
+        </div>
+    </section>
+
+    <section id="grade9-goals" class="page-section">
+        <div class="section-container">
+            <h1 class="editable" contenteditable="false">Grade 9 - Goals & Personal Growth</h1>
+            <div class="grid-3" data-section="grade9-goals"></div>
         </div>
     </section>
 
     <footer>
-        <p>© 2025 Shonazarov Abdurahmon. IB Portfolio.</p>
+        <p class="editable" contenteditable="false">© 2025 Shonazarov Abdurahmon. IB Portfolio.</p>
         <i class="fas fa-lock admin-trigger" onclick="adminLogin()"></i>
     </footer>
 
-    <!-- LOGIC SCRIPT -->
     <script>
-        // ============================================
-        // !!! CONFIGURED FOR YOUR REPO !!!
-        // ============================================
-        const GITHUB_USERNAME = "Abusheyh2"; 
+        const GITHUB_USERNAME = "Abusheyh2";
         const REPO_NAME = "Abdurahmon_portfolio";
         const BRANCH_NAME = "main";
-        const FILE_PATH = "index.html"; 
+        const FILE_PATH = "index.html";
 
-        // --- NAVIGATION ---
+        let isAdmin = false;
+        let currentImgTarget = null;
+        let currentSection = 'home';
+
         function toggleMenu() {
             document.getElementById('navMenu').classList.toggle('active');
         }
@@ -528,24 +726,19 @@
         function switchPage(pageId) {
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active-page'));
             document.getElementById(pageId).classList.add('active-page');
-            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            currentSection = pageId;
             window.scrollTo(0, 0);
         }
 
-        // --- ADMIN SYSTEM ---
-        let isAdmin = false;
-        let currentImgTarget = null;
-
         function adminLogin() {
             let pass = prompt("Enter Admin Password:");
-            if (pass === "admin") {
+            if (pass === "admin123") {
                 isAdmin = true;
-                document.getElementById('admin-bar').style.display = 'flex';
-                document.body.classList.add('admin-active'); // Show delete buttons
+                document.body.classList.add('admin-active');
                 toggleEditMode(true);
-                alert("ADMIN MODE ACTIVE");
+                alert("✅ ADMIN MODE ACTIVE\n\nYou can now:\n- Click any text to edit\n- Click images to change them\n- Use the admin panel (bottom right)\n- Add/delete cards");
             } else {
-                alert("Wrong password!");
+                alert("❌ Wrong password!");
             }
         }
 
@@ -555,126 +748,61 @@
             });
         }
 
-        // --- BLOG SYSTEM ---
-        function createNewPost() {
-            if (!isAdmin) return;
+        function toggleAdminPanel() {
+            document.getElementById('admin-panel').classList.toggle('open');
+        }
 
-            // 1. Force switch to Grade 9 page so user sees the result
-            switchPage('grade9');
+        function addCard(section) {
+            if (!isAdmin) return;
             
-            // 2. Create the HTML for a new post
-            const newPostHTML = `
+            const activePage = document.querySelector('.page-section.active-page');
+            const container = activePage.querySelector('[data-section]') || activePage.querySelector('.grid-3');
+            
+            if (!container) {
+                alert("No container found in current section!");
+                return;
+            }
+
+            const newCard = `
                 <div class="glass-card" style="animation: fadeIn 0.5s ease;">
-                    <button class="delete-btn" onclick="deletePost(this)"><i class="fas fa-trash"></i></button>
+                    <button class="delete-btn" onclick="deleteCard(this)"><i class="fas fa-trash"></i></button>
                     <div onclick="triggerImageUpload(this)">
                         <img src="https://via.placeholder.com/600x400/1e293b/38bdf8?text=Click+to+Add+Image" class="blog-img">
                     </div>
-                    <span class="blog-date editable" contenteditable="true">Today's Date</span>
-                    <h3 class="editable" contenteditable="true">New Blog Title</h3>
+                    <span class="blog-date editable" contenteditable="true">${new Date().toLocaleDateString()}</span>
+                    <h3 class="editable" contenteditable="true">New Title</h3>
                     <p class="editable" contenteditable="true" style="color: var(--text-muted); margin-top:10px;">
-                        Write your blog content here...
+                        Click to edit content...
                     </p>
                 </div>
             `;
 
-            // 3. Insert it at the TOP of the blog container
-            const container = document.getElementById('blog-container');
-            container.insertAdjacentHTML('afterbegin', newPostHTML);
-
-            // 4. Scroll to it
-            document.getElementById('blog-section-title').scrollIntoView();
+            container.insertAdjacentHTML('afterbegin', newCard);
         }
 
-        function deletePost(btn) {
-            if(!isAdmin) return;
-            if(confirm("Are you sure you want to delete this post?")) {
+        function deleteCard(btn) {
+            if (!isAdmin) return;
+            if (confirm("Delete this card?")) {
                 btn.parentElement.remove();
             }
         }
 
-        // --- IMAGE UPLOAD LOGIC ---
-        function triggerImageUpload(wrapper) {
-            if (!isAdmin) return;
-            // Handle both generic wrappers and direct image clicks
-            currentImgTarget = wrapper.tagName === 'IMG' ? wrapper : wrapper.querySelector('img');
-            document.getElementById('img-upload').click();
-        }
-
-        document.getElementById('img-upload').addEventListener('change', function (e) {
-            if (e.target.files && e.target.files[0]) {
-                const file = e.target.files[0];
-                if(file.size > 1000000) { 
-                    alert("Warning: This image is large (>1MB). It might prevent saving to GitHub. Use a smaller image.");
-                }
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    if (currentImgTarget) {
-                        currentImgTarget.src = e.target.result;
-                    }
-                }
-                reader.readAsDataURL(file);
-            }
-        });
-
-        // --- SAVE TO GITHUB ---
-        async function saveSite() {
-            const token = prompt("Paste GitHub Token to Save:");
-            if (!token) return;
-
-            const btn = document.querySelector('.admin-btn.save');
-            const originalText = btn.innerText;
-            btn.innerText = "SAVING...";
-
-            // CLEANUP BEFORE SAVE
-            document.getElementById('admin-bar').style.display = 'none';
-            document.body.classList.remove('admin-active');
-            toggleEditMode(false);
-
-            let htmlContent = "<!DOCTYPE html>\n<html lang='en'>" + document.documentElement.innerHTML + "</html>";
-
-            // RESTORE ADMIN UI
-            document.getElementById('admin-bar').style.display = 'flex';
-            document.body.classList.add('admin-active');
-            toggleEditMode(true);
-
-            try {
-                // GET SHA
-                const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${FILE_PATH}`;
-                const getRes = await fetch(apiUrl, {
-                    headers: { 'Authorization': `token ${token}` }
-                });
-                
-                if(!getRes.ok) throw new Error("Repo not found");
-                const sha = (await getRes.json()).sha;
-
-                // UPLOAD
-                const putRes = await fetch(apiUrl, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `token ${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        message: "Update via Admin Panel",
-                        content: btoa(unescape(encodeURIComponent(htmlContent))),
-                        sha: sha,
-                        branch: BRANCH_NAME
-                    })
-                });
-
-                if (putRes.ok) {
-                    alert("SAVED! \n\nIMPORTANT: GitHub takes 60 seconds to update. \nIf you refresh now, you might see the old version. Wait 1 minute.");
-                    btn.innerText = "SAVED!";
-                    setTimeout(() => btn.innerText = originalText, 2000);
-                } else {
-                    throw new Error("Save failed");
-                }
-            } catch (err) {
-                alert("Error: " + err.message);
-                btn.innerText = "TRY AGAIN";
-            }
-        }
-    </script>
-
-
-</body></html>
+        function showSectionSelector() {
+            const sections = [
+                'home-passions',
+                'grade8-subjects', 'grade8-projects', 'grade8-creativity', 'grade8-service', 
+                'grade8-achievements', 'grade8-reflection', 'grade8-goals',
+                'grade9-subjects', 'grade9-projects', 'grade9-creativity', 'grade9-service',
+                'grade9-achievements', 'grade9-reflection', 'grade9-goals'
+            ];
+            
+            const choice = prompt("Enter section name:\n\n" + sections.join("\n"));
+            if (choice && sections.includes(choice)) {
+                const container = document.querySelector(`[data-section="${choice}"]`);
+                if (container) {
+                    const newCard = `
+                        <div class="glass-card">
+                            <button class="delete-btn" onclick="deleteCard(this)"><i class="fas fa-trash"></i></button>
+                            <h3 class="editable" contenteditable="true">New Card</h3>
+                            <p class="editable" contenteditable="true" style="color: var(--text-muted); margin-top:10px;">
+                                Content

@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang='en'>
-<head>
+<html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shonazarov Abdurahmon | IB Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;800&amp;family=Poppins:wght@300;400;600&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
@@ -472,7 +470,7 @@
     </style>
 </head>
 
-<body>
+<body class="">
     <div class="bg-glow">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
@@ -492,7 +490,7 @@
                     <a onclick="switchPage('grade8-subjects')">Subjects</a>
                     <a onclick="switchPage('grade8-projects')">Projects</a>
                     <a onclick="switchPage('grade8-creativity')">Creativity</a>
-                    <a onclick="switchPage('grade8-service')">Community & Service</a>
+                    <a onclick="switchPage('grade8-service')">Community &amp; Service</a>
                     <a onclick="switchPage('grade8-achievements')">Achievements</a>
                     <a onclick="switchPage('grade8-reflection')">Reflection Journal</a>
                     <a onclick="switchPage('grade8-goals')">Goals</a>
@@ -504,7 +502,7 @@
                     <a onclick="switchPage('grade9-subjects')">Subjects</a>
                     <a onclick="switchPage('grade9-projects')">Projects</a>
                     <a onclick="switchPage('grade9-creativity')">Creativity</a>
-                    <a onclick="switchPage('grade9-service')">Community & Service</a>
+                    <a onclick="switchPage('grade9-service')">Community &amp; Service</a>
                     <a onclick="switchPage('grade9-achievements')">Achievements</a>
                     <a onclick="switchPage('grade9-reflection')">Reflection Journal</a>
                     <a onclick="switchPage('grade9-goals')">Goals</a>
@@ -514,14 +512,13 @@
     </nav>
 
     <!-- ADMIN PANEL -->
-    <div id="admin-panel">
+    <div id="admin-panel" class="open">
         <div class="admin-header" style="position: relative;">
             <h2><i class="fas fa-shield-alt"></i> Admin Control Panel</h2>
             <p style="font-size: 0.85rem; margin-top: 5px; opacity: 0.9;">Full site editing enabled</p>
             
             <!-- NEW CLOSE BUTTON -->
-            <i class="fas fa-times" onclick="toggleAdminPanel()" 
-               style="position: absolute; top: 20px; right: 20px; font-size: 1.5rem; cursor: pointer;">
+            <i class="fas fa-times" onclick="toggleAdminPanel()" style="position: absolute; top: 20px; right: 20px; font-size: 1.5rem; cursor: pointer;">
             </i>
         </div>
 
@@ -564,11 +561,9 @@
 
         <div class="admin-section">
             <h3><i class="fas fa-save"></i> Save Changes</h3>
-            <button class="admin-btn success" onclick="saveSite()">
-                <i class="fas fa-cloud-upload-alt"></i> Save/Export
-            </button>
+            <button class="admin-btn success" onclick="saveSite()"><i class="fas fa-spinner fa-spin"></i> Saving to GitHub...</button>
             <button class="admin-btn danger" onclick="location.reload()">
-                <i class="fas fa-times"></i> Cancel & Reload
+                <i class="fas fa-times"></i> Cancel &amp; Reload
             </button>
         </div>
     </div>
@@ -624,7 +619,7 @@
 
     <section id="grade8-projects" class="page-section">
         <div class="section-container">
-            <h1 class="editable" contenteditable="false">Grade 8 - Projects & Blog</h1>
+            <h1 class="editable" contenteditable="false">Grade 8 - Projects &amp; Blog</h1>
             <div class="grid-3" data-section="grade8-projects"></div>
         </div>
     </section>
@@ -638,7 +633,7 @@
 
     <section id="grade8-service" class="page-section">
         <div class="section-container">
-            <h1 class="editable" contenteditable="false">Grade 8 - Community & Service</h1>
+            <h1 class="editable" contenteditable="false">Grade 8 - Community &amp; Service</h1>
             <div class="grid-3" data-section="grade8-service"></div>
         </div>
     </section>
@@ -659,7 +654,7 @@
 
     <section id="grade8-goals" class="page-section">
         <div class="section-container">
-            <h1 class="editable" contenteditable="false">Grade 8 - Goals & Personal Growth</h1>
+            <h1 class="editable" contenteditable="false">Grade 8 - Goals &amp; Personal Growth</h1>
             <div class="grid-3" data-section="grade8-goals"></div>
         </div>
     </section>
@@ -674,7 +669,7 @@
 
     <section id="grade9-projects" class="page-section">
         <div class="section-container">
-            <h1 class="editable" contenteditable="false">Grade 9 - Projects & Blog</h1>
+            <h1 class="editable" contenteditable="false">Grade 9 - Projects &amp; Blog</h1>
             <div class="grid-3" data-section="grade9-projects"></div>
         </div>
     </section>
@@ -688,7 +683,7 @@
 
     <section id="grade9-service" class="page-section">
         <div class="section-container">
-            <h1 class="editable" contenteditable="false">Grade 9 - Community & Service</h1>
+            <h1 class="editable" contenteditable="false">Grade 9 - Community &amp; Service</h1>
             <div class="grid-3" data-section="grade9-service"></div>
         </div>
     </section>
@@ -709,7 +704,7 @@
 
     <section id="grade9-goals" class="page-section">
         <div class="section-container">
-            <h1 class="editable" contenteditable="false">Grade 9 - Goals & Personal Growth</h1>
+            <h1 class="editable" contenteditable="false">Grade 9 - Goals &amp; Personal Growth</h1>
             <div class="grid-3" data-section="grade9-goals"></div>
         </div>
     </section>
@@ -934,5 +929,6 @@
             toggleEditMode(true);
         }
 </script>
-   </body>
-</html>
+   
+
+</body></html>
